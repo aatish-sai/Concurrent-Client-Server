@@ -2,19 +2,20 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include <sigint.h>
+#include <signal.h>
 #include <sys/types.h>
+#include <sys/wait.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
 void cleanup_child(int signal){
-	wait();
+	wait(NULL);
 }
 
 void main(){
 
-	signal(SIGCHILD,cleanup_child);
+	signal(SIGCHLD,cleanup_child);
 
 	int sockfd,newsockfd;
 	int clilen;
@@ -42,7 +43,7 @@ void main(){
 	listen(sockfd,5);
 
 	while(1){
-		num++;
+		//num++;
 		clilen = sizeof(cli_addr);
 		newsockfd = accept(sockfd,(struct sockaddr *)&cli_addr,&clilen);
 
