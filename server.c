@@ -9,13 +9,9 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
-void cleanup_child(int signal){
-	wait(NULL);
-}
 
 void main(){
 
-	signal(SIGCHLD,cleanup_child);
 
 	int sockfd,newsockfd;
 	int clilen;
