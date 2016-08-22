@@ -2,12 +2,20 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <sigint.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
+void cleanup_child(int signal){
+	wait();
+}
+
 void main(){
+
+	signal(SIGCHILD,cleanup_child);
+
 	int sockfd,newsockfd;
 	int clilen;
 	struct sockaddr_in cli_addr,serv_addr;
